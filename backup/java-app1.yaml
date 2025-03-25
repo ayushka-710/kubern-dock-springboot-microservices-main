@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-deployment
+  labels:
+    app: java-app
+spec:
+  replicas: 2  # Adjust the number of replicas if needed
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+      annotations:
+        ad.datadoghq.com/java-app.checks: |
+          {
+            "jmx": {
+              "init_config": {
+                "is_jmx": true,
+                "collect_default_metrics": true
+              },
+              "instances": [{
+                "host": "%%host%%",
+                "port": "9012"
+              }]
+            }
+          }  # Datadog JMX configuration for auto-discovery
+    spec:
+      containers:
+        - name: java-app
+          image: ashutoshkharel/java-app:jv78  # Replace with your image and tag
+          ports:
+            - containerPort: 9098  # Expose port 9098 inside the container (Spring Boot default)
+              name: http  # Add the name for this port
+            - containerPort: 9012  # Expose JMX port inside the container
+              name: jmx  # Add the name for this port
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: JAVA_OPTS
+              value: >-
+                -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.authenticate=false
+                -Dcom.sun.management.jmxremote.ssl=false
+                -Dcom.sun.management.jmxremote.local.only=false
+                -Dcom.sun.management.jmxremote.port=9012  # JMX port
+                -Dcom.sun.management.jmxremote.rmi.port=9012
+                -Djava.rmi.server.hostname=$(POD_IP)  # This binds the JMX to the pod IP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-service
+spec:
+  selector:
+    app: java-app  # The service will match the deployment's label
+  ports:
+    - protocol: TCP
+      port: 9098          # External port the service will listen on (HTTP)
+      targetPort: 9098    # Port inside the container where the Spring Boot app is running
+      name: http  # Add name for the HTTP port
+    - protocol: TCP
+      port: 9012          # JMX port for Datadog monitoring
+      targetPort: 9012    # Port inside the container where JMX is running
+      name: jmx  # Add name for the JMX port
+  type: ClusterIP  # Exposes the service internally; change to LoadBalancer for external access
+

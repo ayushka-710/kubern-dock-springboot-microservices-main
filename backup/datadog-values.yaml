@@ -1,0 +1,37 @@
+registry: "gcr.io/datadoghq"
+datadog:
+  apiKeyExistingSecret: "datadog-secret"
+  site: "datadoghq.com"
+  clusterName: "default"
+  apm:
+    socketEnabled: true
+    hostSocketPath: /var/run/datadog/
+    socketPath: /var/run/datadog/apm.socket
+    instrumentation:
+      enabled: true
+      libVersions:
+        java: "1"
+        dotnet: "3"
+        python: "2"
+        js: "5"
+  logs:
+    enabled: true
+    containerCollectAll: true
+  processAgent:
+    enabled: true
+    processCollection: true
+    runInCoreAgent: true
+  agents:
+      containers:
+          processAgent:
+              env:
+              - name: DD_SCRUB_ARGS
+                value: "true"
+              - name: DD_CUSTOM_SENSITIVE_WORDS
+                value: "personal_key,*token,*token,sql*,*pass*d*"
+  orchestratorExplorer:
+    enabled: true
+  kubernetes:
+    enabled: true
+    orchestrator:
+      enabled: true
