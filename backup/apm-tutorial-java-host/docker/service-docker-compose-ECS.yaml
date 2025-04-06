@@ -1,0 +1,29 @@
+# Unless explicitly stated otherwise all files in this repository are licensed
+# under the Apache 2.0 License.
+#
+# This product includes software developed at Datadog (https://www.datadoghq.com/)
+# Copyright 2023 Datadog, Inc.
+#Use when running application on ECS
+#Creates bare application images as other variables will be set in ECS configuration
+version: '3'
+services:
+  notes:
+    container_name: notes
+    restart: always
+    build: 
+       context: ../
+       dockerfile: notes/dockerfile.notes.maven
+    ports:
+      - 8080:8080
+    depends_on:
+      - calendar
+
+  calendar:
+    container_name: calendar
+    restart: always
+    build: 
+      context: ../
+      dockerfile: calendar/dockerfile.calendar.maven
+    ports:
+      - 9090:9090
+    
