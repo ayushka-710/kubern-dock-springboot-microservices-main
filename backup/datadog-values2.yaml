@@ -2,7 +2,7 @@ targetSystem: "linux"
 registry: "gcr.io/datadoghq"
 datadog:
   apiKeyExistingSecret: "datadog-secret"
-  appKey: "280e36a16cc0da5f6ca239e55cba1cd811fbe486"
+  appKey: "**********************"
   site: "datadoghq.com"
   clusterName: "default-1st"   # Required since K3s does not provide it automatically
   kubelet:
