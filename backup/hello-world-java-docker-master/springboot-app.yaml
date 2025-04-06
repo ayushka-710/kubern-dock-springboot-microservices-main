@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-java
+  labels:
+    app: springboot-java
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-java
+  template:
+    metadata:
+      labels:
+        app: springboot-java
+      annotations:
+        ad.datadoghq.com/hello-world-java.logs: '[{"source": "java", "service": "springboot-java"}]'
+    spec:
+      containers:
+        - name: springboot-java
+          image: ashutoshkharel/java-app:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DD_AGENT_HOST
+              value: "datadog-agent"
+            - name: DD_TRACE_AGENT_PORT
+              value: "8126"
+          volumeMounts:
+            - name: apm-socket
+              mountPath: /var/run/datadog
+      volumes:
+        - name: apm-socket
+          hostPath:
+            path: /var/run/datadog/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-java-service
+spec:
+  selector:
+    app: springboot-java
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+

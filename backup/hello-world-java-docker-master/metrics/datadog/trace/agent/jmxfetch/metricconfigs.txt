@@ -1,0 +1,15 @@
+activemq.yaml
+cassandra.yaml
+confluent_platform.yaml
+hazelcast.yaml
+hive.yaml
+hivemq.yaml
+hudi.yaml
+ignite.yaml
+jboss_wildfly.yaml
+kafka.yaml
+presto.yaml
+solr.yaml
+sonarqube.yaml
+tomcat.yaml
+weblogic.yaml
