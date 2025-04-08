@@ -48,7 +48,8 @@ spec:
     spec:
       containers:
         - name: notes-app
-          image: ashutoshkharel/java-app:notes
+#          image: ashutoshkharel/java-app:notes
+          image: ashutoshkharel/java-app:vul_notes
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

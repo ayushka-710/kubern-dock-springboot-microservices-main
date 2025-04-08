@@ -16,6 +16,14 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
+	<!--  extra feature  -->
+	<parent>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-parent</artifactId>
+    		<version>2.7.17</version> <!-- Updated Spring Boot version -->
+	</parent>
+	<!--  extra features   -->
 	<dependencies>
 
 		<!-- Used for manual tracing below
@@ -50,6 +58,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!-- extra features -->
+		<dependency>
+    			<groupId>org.springframework.boot</groupId>
+    			<artifactId>spring-boot-starter-jdbc</artifactId>
+    			<version>3.1.3</version>
+		</dependency>
+		<dependencies>
+    			<!-- Update Spring Boot starter to a newer version -->
+    		<dependency>
+        		<groupId>org.springframework.boot</groupId>
+        		<artifactId>spring-boot-starter-webflux</artifactId>
+        		<version>2.7.17</version> <!-- Updated version -->
+		</dependency>
+		<!--  extra features endpoint  -->
+	</dependencies>
+
 
 		<dependency>
 			<groupId>com.h2database</groupId>
