@@ -3,13 +3,84 @@
 #
 # This product includes software developed at Datadog (https://www.datadoghq.com/)
 # Copyright 2023 Datadog, Inc.
-targetSystem: "linux"
-clusterAgent:
-  replicas: 2
-  createPodDisruptionBudget: true
-  admissionController:
-    enabled: true
-    mutateUnlabelled: true
+#targetSystem: "linux"
+#clusterAgent:
+#  replicas: 2
+#  createPodDisruptionBudget: true
+#  admissionController:
+#    enabled: true
+#    mutateUnlabelled: true
+#datadog:
+#  apm:
+#    portEnabled: true
+
+registry: "gcr.io/datadoghq"
 datadog:
+  apiKeyExistingSecret: "datadog-secret"
+  site: "datadoghq.com"
+  tags:
+        - env: admission_controller
+  clusterName: "default"
+  kubelet:
+    tlsVerify: false
   apm:
     portEnabled: true
+    enabled: true
+    instrumentation:
+      enabled: true
+      libVersions:
+        java: "1"
+        dotnet: "3"
+        python: "2"
+        js: "5"
+  logs:
+    enabled: true
+    containerCollectAll: true
+  processAgent:
+    enabled: true
+    processCollection: true
+    runInCoreAgent: true
+  kubernetes:
+    enabled: true
+    orchestrator:
+      enabled: true
+
+
+#(...)
+clusterAgent:
+  #(...)
+  ## @param admissionController - object - required
+  ## Enable the admissionController to automatically inject APM and
+  ## DogStatsD config and standard tags (env, service, version) into
+  ## your pods
+  #
+  admissionController:
+    enabled: true
+
+    ## @param mutateUnlabelled - boolean - optional
+    ## Enable injecting config without having the pod label:
+    ## admission.datadoghq.com/enabled="true"
+    #
+    mutateUnlabelled: true
+
+apm:
+  instrumentation:
+    enabled: true
+    targets:
+      - name: "all"
+        namespaceSelector: {}
+        podSelector: {}
+
+agents:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Exists
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Exists
+
+  dogstatsd:
+    port: 8125
+    useHostPort: true
+    nonLocalTraffic: true

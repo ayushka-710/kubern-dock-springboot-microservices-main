@@ -2,10 +2,15 @@ registry: "gcr.io/datadoghq"
 datadog:
   apiKeyExistingSecret: "datadog-secret"
   site: "datadoghq.com"
+  tags:
+    - env: test
   clusterName: "default"
+  kubelet:
+    tlsVerify: false
   apm:
     portEnabled: true
     enabled: true
+    nonLocalTraffic: true
     instrumentation:
       enabled: true
       libVersions:
@@ -13,6 +18,8 @@ datadog:
         dotnet: "3"
         python: "2"
         js: "5"
+  profiling:
+    enabled: true
 
 #  securityAgent:
 #    runtime:
@@ -51,9 +58,32 @@ datadog:
 
 
 
-# To setup squid proxy in datadog-agent and clusteragent pods     
+# To setup squid proxy in datadog-agent and clusteragent pods 
+
+apm:
+  instrumentation:
+    enabled: true
+    targets:
+      - name: "all"
+        namespaceSelector: {}
+        podSelector: {}
         
-# agents:     
+agents:
+  image:
+    tagSuffix: jmx
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Exists
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Exists
+
+  dogstatsd:
+    port: 8125
+    useHostPort: true
+    nonLocalTraffic: true
+
 #  env:
 #    - name: DD_PROXY_HTTP
 #      value: http://192.168.0.103:3128
@@ -62,7 +92,18 @@ datadog:
 #    - name: DD_PROXY_NO_PROXY
 #      value: "localhost,127.0.0.1,*.svc,.cluster.local,kubernetes.default"
 
-# clusterAgent:
+clusterAgent:
+  enabled: true
+  admissionController:
+    enabled: true
+#    configMode: service
+#    validation:
+#      enabled: true
+#    mutation:
+#      enabled: true
+    mutateUnlabelled: true
+#    webhookName: datadog-webhook
+
 #  env:
 #    - name: DD_PROXY_HTTP
 #      value: http://192.168.0.103:3128

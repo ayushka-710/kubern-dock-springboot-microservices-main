@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: appsec
-Implementation-Version: 1.47.3
-Implementation-URL: https://github.com/datadog/dd-trace-java
-Implementation-Vendor: Datadog
-

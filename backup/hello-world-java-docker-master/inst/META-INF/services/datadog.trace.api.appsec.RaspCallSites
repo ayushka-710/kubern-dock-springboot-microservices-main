@@ -1,6 +1,0 @@
-datadog.trace.instrumentation.java.lang.FileCallSites
-datadog.trace.instrumentation.java.lang.FileInputStreamCallSites
-datadog.trace.instrumentation.java.lang.FileOutputStreamCallSites
-datadog.trace.instrumentation.java.lang.PathCallSites
-datadog.trace.instrumentation.java.lang.PathsCallSites
-datadog.trace.instrumentation.java.net.URLSinkCallSites

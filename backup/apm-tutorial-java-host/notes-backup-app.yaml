@@ -28,10 +28,10 @@ metadata:
     name: notes-app-deploy
     app: java-tutorial-app
     tags.datadoghq.com/env: "dev"
-    tags.datadoghq.com/service: "notes"
+    tags.datadoghq.com/service: "notes-app"
     tags.datadoghq.com/version: "0.0.1"
 spec:
-  replicas: 1
+  replicas: 2
   selector: 
     matchLabels:
       name: notes-app-pod
@@ -48,13 +48,18 @@ spec:
     spec:
       containers:
         - name: notes-app
-          image: ashutoshkharel/java-app:notes-auto
+#          image: ashutoshkharel/java-app:notes
+          image: ashutoshkharel/java-app:vul_notes
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: CALENDAR_HOST
               value: calendar-app
+            - name: DD_AGENT_HOST
+              value: "datadog-agent"
+            - name: DD_TRACE_AGENT_PORT
+              value: "8126"
             - name: DD_ENV
               valueFrom:
                 fieldRef:
