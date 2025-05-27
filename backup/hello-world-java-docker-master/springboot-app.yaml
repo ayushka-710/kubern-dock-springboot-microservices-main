@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: springboot-java
-          image: ashutoshkharel/java-app:redis
+          image: docker.io/ashutoshkharel/java-app:redis
           ports:
             - containerPort: 8080
           env:
@@ -48,9 +48,11 @@ spec:
             - name: DD_PROFILING_ENABLED
               value: "true"
             - name: REDIS_HOST
-              value: "192.168.0.107"
+              value: "192.168.1.65"
             - name: REDIS_PORT
               value: "6379"
+      imagePullSecrets:
+        - name: regcred
 #
 #            - name: DD_AGENT_HOST
 #              value: "datadog-agent"
@@ -77,4 +79,3 @@ spec:
       port: 80
       targetPort: 8080
   type: ClusterIP
-
