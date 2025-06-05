@@ -1,0 +1,53 @@
+# Installation and agent setup
+https://install.datadoghq.com:443    # Agent installer
+https://yum.datadoghq.com:443        # Yum repo
+https://keys.datadoghq.com:443       # GPG keys
+https://apt.datadoghq.com:443        # Apt repo
+
+# Destination by Functionality
+# APM (Tracing)
+https://trace.agent.datadoghq.com:443   
+https://instrumentation-telemetry-intake.datadoghq.com:443
+
+# LLM Observability
+https://llmobs-intake.datadoghq.com:443
+
+# Container Images
+https://contimage-intake.datadoghq.com:443
+
+# Live Containers and Process
+https://process.datadoghq.com
+
+# Network Path
+https://netpath-intake.datadoghq.com:443
+
+# Orchestrator 
+https://orchestrator.datadoghq.com:443
+https://contlcycle-intake.datadoghq.com:443
+
+# Real User Monitoring (RUM)
+https://browser-intake-datadoghq.com:443
+
+# Profiling
+https://intake.profile.datadoghq.com:443
+
+# Synthetic Monitoring
+https://intake.synthetics.datadoghq.com:443
+https://intake-v2.synthetics.datadoghq.com:443
+https://api.datadoghq.com:443
+
+# Remote Configuration
+https://config.datadoghq.com:443
+
+# Database Monitoring
+https://dbm-metrics-intake.datadoghq.com:443
+https://dbquery-intake.datadoghq.com:443
+
+# Logs (Standard and HIPAA)
+https://agent-intake.logs.datadoghq.com:10516
+https://agent-http-intake.logs.datadoghq.com:443
+https://tcp-encrypted-intake.logs.datadoghq.com:443
+https://lambda-tcp-encrypted-intake.logs.datadoghq.com:443
+https://gcp-encrypted-intake.logs.datadoghq.com:443
+https://http-encrypted-intake.logs.datadoghq.com:443
+

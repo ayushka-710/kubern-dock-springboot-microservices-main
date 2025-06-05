@@ -1,0 +1,105 @@
+targetSystem: "linux"
+registry: "gcr.io/datadoghq"
+datadog:
+  apiKeyExistingSecret: "datadog-secret"
+  appKey: "**********************"
+  site: "datadoghq.com"
+  clusterName: "default-1st"   # Required since K3s does not provide it automatically
+  kubelet:
+    host: "https://127.0.0.1:6443"  # K3s API server location
+    tlsVerify: false   # Disable TLS verification if using self-signed certs
+
+  logLevel: trace   # Updated logging level to trace for detailed logs
+  kubeStateMetricsEnabled: false  # Ensure kube-state-metrics is disabled
+
+  dogstatsd:    ## To emit custom metrics from your Kubernetes application, use DogStatsD.
+    port: 8125
+    useSocketVolume: true  
+    socketPath: /var/run/datadog/dsd.socket  ## Path to the DogStatsD socket
+    hostSocketPath: /var/run/datadog/  ## Path to the DogStatsD socket
+    useHostPort: true
+
+  collectEvents: true
+
+  confd:
+    k3s.yaml: |-
+      apiVersion: v1
+      kind: Config
+      clusters:
+        - name: k3s-cluster
+          cluster:
+            server: https://%%host%%:6443
+            certificate-authority: /host/var/lib/rancher/k3s/server/tls/server-ca.crt
+      contexts:
+        - name: k3s-context
+          context:
+            cluster: k3s-cluster
+            user: k3s-user
+      users:
+        - name: k3s-user
+          user:
+            client-certificate: /host/var/lib/rancher/k3s/server/tls/client-k3s-controller.crt
+            client-key: /host/var/lib/rancher/k3s/server/tls/client-k3s-controller.key
+      current-context: k3s-context
+  
+  logs:
+    enabled: true    # Enable log collection
+    containerCollectAll: true   # Configure container log collection
+    containerCollectUsingFiles: false   # Collects logs by using file-based configuration.
+  
+  apm:
+    portEnabled: true
+    socketEnabled: true
+    useSocketVolume: true
+    socketPath: /var/run/datadog/apm.socket
+    hostSocketPath: /var/run/datadog/
+    useLocalService: false
+    enabled: true
+    port: 8126
+  
+  processAgent:
+    enabled: true
+    processCollection: true
+    containerCollection: true
+  
+  systemProbe:
+    enableOOMKill: true    # Enables monitoring for out-of-memory kills.
+    collectDNSStats: false    # Disables DNS statistics collection.
+    enableTCPQueueLength: false   # Disables TCP queue length monitoring.
+    networkConfig:
+      enabled: true  # Enables network configuration monitoring
+
+  orchestratorExplorer:
+    enabled: true
+
+agents:
+  enabled: true
+  useHostNetwork: true  # Helps avoid network issues in K3s
+  containerRuntime: "containerd"  # K3s uses containerd instead of Docker
+
+  volumes:
+    - hostPath:
+        path: /var/lib/rancher/k3s/server/tls
+      name: k3s-tls
+  volumeMounts:
+    - name: k3s-tls
+      mountPath: /host/var/lib/rancher/k3s/server/tls
+      readOnly: true
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+
+###### ------ only useful when containerCollectionUsingFiles is true ------ ######
+    
+# logCollection:
+# enabled: true  # Enable log collection for the agent
+# containerLogs:
+# - type: file
+# path: "/var/log/containers/*.log"  # Path to container log files
+# service: "my-service"  # Log tag: Can be your application name or container name
+# source: "kubernetes"  # Source tag: Can be "kubernetes" for Kubernetes-based logs
+# sourceCategory: "kubernetes"  # Optional: Used for categorization
+
+clusterAgent:
+  enabled: true  # Deploys Datadog Cluster Agent

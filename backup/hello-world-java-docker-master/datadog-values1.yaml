@@ -1,0 +1,44 @@
+registry: "gcr.io/datadoghq"
+datadog:
+  apiKeyExistingSecret: "datadog-secret"
+  site: "datadoghq.com"
+  clusterName: "default"
+  apm:
+    portEnabled: true
+    enabled: true
+    instrumentation:
+      enabled: true
+      libVersions:
+        java: "1"
+        dotnet: "3"
+        python: "2"
+        js: "5"
+  logs:
+    enabled: true
+    containerCollectAll: true
+  processAgent:
+    enabled: true
+    processCollection: true
+    runInCoreAgent: true
+  kubernetes:
+    enabled: true
+    orchestrator:
+      enabled: true
+
+agents:
+  env:
+    - name: DD_PROXY_HTTP
+      value: http://192.168.0.103:3128
+    - name: DD_PROXY_HTTPS
+      value: http://192.168.0.103:3128
+    - name: DD_PROXY_NO_PROXY
+      value: "localhost,127.0.0.1,*.svc,.cluster.local,kubernetes.default"
+
+clusterAgent:
+  env:
+    - name: DD_PROXY_HTTP
+      value: http://192.168.0.103:3128
+    - name: DD_PROXY_HTTPS
+      value: http://192.168.0.103:3128
+    - name: DD_PROXY_NO_PROXY
+      value: "localhost,127.0.0.1,*.svc,.cluster.local,kubernetes.default"
