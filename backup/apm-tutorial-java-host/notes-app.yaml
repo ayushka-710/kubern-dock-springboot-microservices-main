@@ -84,7 +84,7 @@ spec:
             - name: DD_TRACE_SQS_BODY_PROPAGATION_ENABLED
               value: "true"
 #            - name: DD_GIT_COMMIT_SHA
-#              value: 4dfdfc666ce3eac8e1bdcab5c9684ae54c528457
+#              value: ************************************
 #            - name: DD_GIT_REPOSITORY_URL
 #              value: https://github.com/ayushka-710/git.git
 #            - name: CALENDAR_HOST
