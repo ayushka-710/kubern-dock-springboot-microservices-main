@@ -4,6 +4,6 @@ elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 # elasticsearch.ssl.verificationMode: "none"
 # elasticsearch.username: "elastic"
 # elasticsearch.password: "Yh=Z2M+4SJ6IWxPTLFQY"
-elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2liYW5hL215LWtpYmFuYS10b2tlbjpGcEpGcjlfblNaMmlxSGU2RExFNFRn"
+elasticsearch.serviceAccountToken: "**********************************"
 monitoring.ui.container.elasticsearch.enabled: true
 
