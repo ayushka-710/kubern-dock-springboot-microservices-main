@@ -17,7 +17,7 @@ output.elasticsearch:
  # ssl.certificate_authorities: ["/usr/share/filebeat/config/certs/http_ca.crt"]
  # ssl.verification_mode: none
 
-  username: "elastic"
-  password: "Yh=Z2M+4SJ6IWxPTLFQY"
+  username: "*****************"
+  password: "*****************"
 
 logging.metrics.enabled: false
