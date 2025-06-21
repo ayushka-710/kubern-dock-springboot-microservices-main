@@ -2,6 +2,9 @@ filebeat.autodiscover:
   providers:
     - type: docker
       templates:
+ #       - condition:
+ #           contains:
+ #             container.labels.collect_logs_with_filebeat: "true"
         - config:
             - type: container
               format: docker
@@ -9,6 +12,8 @@ filebeat.autodiscover:
                 - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
               processors:
                 - decode_json_fields:
+                    when.equals:
+                      docker.container.labels.decode_log_event_to_json_object: "true"
                     fields: ["message"]
                     target: ""
                     overwrite_keys: true
@@ -17,7 +22,7 @@ output.elasticsearch:
  # ssl.certificate_authorities: ["/usr/share/filebeat/config/certs/http_ca.crt"]
  # ssl.verification_mode: none
 
-  username: "elastic"
-  password: "Yh=Z2M+4SJ6IWxPTLFQY"
+  username: "test"
+  password: "bfGqW7QBUzcANIIkan5k"
 
 logging.metrics.enabled: false
