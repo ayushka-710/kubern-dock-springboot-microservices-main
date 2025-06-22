@@ -22,8 +22,8 @@ The Elastic Stack's purpose is to act as a **unified, real-time data analysis pl
 ## Microservices:
 ### MYSQL:
 You can assign the desired **MYSQL_ROOT_PASSWORD** and **MYSQL_DATABASE** name within the environment block of the mysql service in your compose-local.yml file.
-- MYSQL_ROOT_PASSWORD = mysql root Password
-- MYSQL_DATABASE = Database Name
+- MYSQL_ROOT_PASSWORD = < mysql root Password >
+- MYSQL_DATABASE = < Database Name >
 
 #### If MYSQL_ROOT_PASSWORD is changed you need to update the password in every environment section in compose-local.yml
 - SPRING_DATASOURCE_PASSWORD = use the mysql root password
