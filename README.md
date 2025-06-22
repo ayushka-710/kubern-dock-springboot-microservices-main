@@ -26,7 +26,7 @@ You can assign the desired **MYSQL_ROOT_PASSWORD** and **MYSQL_DATABASE** name w
 - MYSQL_DATABASE = < Database Name >
 
 #### If MYSQL_ROOT_PASSWORD is changed you need to update the password in every environment section in compose-local.yml
-- SPRING_DATASOURCE_PASSWORD = use the mysql root password
+- SPRING_DATASOURCE_PASSWORD = < use the mysql root password >
 
 ### ElasticSearch:
 In the case of Elasticsearch, you can either use the default password or reset the password as per the requirement. To reset the password, you first need to access the Elasticsearch container’s shell. Use the following command to enter the container shell. Once inside, you can execute additional commands required for configuration and password generation.
@@ -37,12 +37,12 @@ In the case of Elasticsearch, you can either use the default password or reset t
 - bin/elasticsearch-reset-password -u elastic
 
 #### 2. Single step to reset the password (useful in filebeat.yml)
-- docker exec -it <container_id> bin/elasticsearch-reset-password -u elastic
+- docker exec -it < container_id > bin/elasticsearch-reset-password -u elastic
 
 (Add the reset password of elastic search in compose-local.yml file within environment variable of elastic search block.)
 
 #### 3. Generating ElasticSearch serviceAccountToken (useful in kibana.yml):
-- docker exec -it <container_id> /bin/bash 
+- docker exec -it < container_id > /bin/bash 
 - bin/elasticsearch-service-tokens create elastic kibana my-kibana-token
   - This creates a token for the service account **elastic/kibana**
   - **my-kibana-token** is just a name you give to your token
@@ -57,21 +57,24 @@ In the case of Kibana,the generated **elasticsearch serviceAccountToken** should
 ### JMS (ActiveMQ)
 In the case of JMS, you can use the username and password as per your requirement.
 - ARTEMIS_USERNAME: artemis (default username)
-- ARTEMIS_PASSWORD: <Your Password>
+- ARTEMIS_PASSWORD: < Your Password >
 
 Need to update the username and password of JMS broker (ActiveMQ) in **application.properties** 
 - sb-services/kbe-brewery-beer-service
 - find . -name "application.properties" 2>/dev/null (update the activemq username and password)
-    - spring.artemis.user = <username> 
-    - spring.artemis.password = <password>
+    - spring.artemis.user = < username > 
+    - spring.artemis.password = < password >
+
+Also need to update it in environment section of compose-local.yml
+- SPRING_ARTEMIS_USER: artemis (default username)
+- SPRING_ARTEMIS_PASSWORD: < your password >
 
 It also contain the username and password to access inventory-service.
 - inventory-user = good
 - inventory-password = beer
 
-### For other Services You dont need to change anything
+### For other Services You dont need to change anything keep it default (for inventory-service, inventory-failover, beer-service, order-service, gateway)
 
-
-
+https://snapcraft.io/install/postman/rhel
 
 
