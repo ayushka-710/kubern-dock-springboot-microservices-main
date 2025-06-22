@@ -75,6 +75,13 @@ It also contain the username and password to access inventory-service.
 
 ### For other Services You dont need to change anything keep it default (for inventory-service, inventory-failover, beer-service, order-service, gateway)
 
+## To install postman in Red Hat Enterprise Linux 
 https://snapcraft.io/install/postman/rhel
+(Postman is a tool used to test, develop, and interact with APIs (Application Programming Interfaces). It allows you to send requests to web servers and view their responses.)
 
+- snap run postman (to run postman)
+
+## To view the API endpoint
+- cd sb-services/
+- find . -name "*Controller*" 2>/dev/null (This will display all of the controller file which consists of API endpoint which can be used in postman.)
 
