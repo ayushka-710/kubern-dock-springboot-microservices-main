@@ -22,17 +22,17 @@ The Elastic Stack's purpose is to act as a **unified, real-time data analysis pl
 ## Microservices:
 ### MYSQL:
 You can assign the desired **MYSQL_ROOT_PASSWORD** and **MYSQL_DATABASE** name within the environment block of the mysql service in your compose-local.yml file.
-- MYSQL_ROOT_PASSWORD = <Your Password>
-- MYSQL_DATABASE = <Database Name>
+- MYSQL_ROOT_PASSWORD = mysql root Password
+- MYSQL_DATABASE = Database Name
 
 #### If MYSQL_ROOT_PASSWORD is changed you need to update the password in every environment section in compose-local.yml
-- SPRING_DATASOURCE_PASSWORD = <use the mysql root password> 
+- SPRING_DATASOURCE_PASSWORD = use the mysql root password
 
 ### ElasticSearch:
 In the case of Elasticsearch, you can either use the default password or reset the password as per the requirement. To reset the password, you first need to access the Elasticsearch container’s shell. Use the following command to enter the container shell. Once inside, you can execute additional commands required for configuration and password generation.
 
 #### 1. Full step from accessing the container shell to reset the passowrd
-- docker exec -it <container_id> /bin/bash 
+- docker exec -it < container_id > /bin/bash 
 - cd /usr/share/elasticsearch
 - bin/elasticsearch-reset-password -u elastic
 
