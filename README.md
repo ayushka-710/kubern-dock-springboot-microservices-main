@@ -65,13 +65,13 @@ Need to update the username and password of JMS broker (ActiveMQ) in **applicati
     - spring.artemis.user = < username > 
     - spring.artemis.password = < password >
 
-Also need to update it in environment section of compose-local.yml
-- SPRING_ARTEMIS_USER: artemis (default username)
-- SPRING_ARTEMIS_PASSWORD: < your password >
-
 It also contain the username and password to access inventory-service.
 - inventory-user = good
 - inventory-password = beer
+
+Also need to update it in environment section of compose-local.yml
+- SPRING_ARTEMIS_USER: artemis (default username)
+- SPRING_ARTEMIS_PASSWORD: < your password >
 
 ### For other Services You dont need to change anything keep it default (for inventory-service, inventory-failover, beer-service, order-service, gateway)
 
