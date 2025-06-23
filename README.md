@@ -83,5 +83,10 @@ https://snapcraft.io/install/postman/rhel
 
 ## To view the API endpoint
 - cd sb-services/
-- find . -name "*Controller*" 2>/dev/null (This will display all of the controller file which consists of API endpoint which can be used in postman.)
+- find . -name "*Controller*" 2>/dev/null (These will display all of the controller file which consists of API endpoint which can be used in postman.)
+
+## Command to run the compose-local.yml
+- docker compose -f compose-local.yml up -d
+
+
 
